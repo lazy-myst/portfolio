@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { delay, motion as m } from "framer-motion"
+import { motion as m } from "framer-motion"
 import { useState } from "react"
 
 const ContactsSection = () => {

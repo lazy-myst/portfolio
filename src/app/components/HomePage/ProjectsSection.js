@@ -73,14 +73,14 @@ const ProjectsSection = () => {
                                     initial={{ opacity: 0 }}
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.8 }}>
+                                    transition={{ duration: 0.8, delay: .5 }}>
                                     Coming Soon
                                 </m.h5>
                                 <m.h6 className="text-xs xl:text-sm text-black"
                                     initial={{ opacity: 0 }}
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.8 }}>
+                                    transition={{ duration: 0.8, delay: .5 }}>
                                     Coming Soon
                                 </m.h6>
                             </div>
@@ -108,7 +108,7 @@ const ProjectsSection = () => {
                                     initial={{ opacity: 0 }}
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.8 }}>
+                                    transition={{ duration: 0.8, delay: .5 }}>
                                     Coming Soon
                                 </m.h5>
                                 <m.h6
@@ -116,7 +116,8 @@ const ProjectsSection = () => {
                                     initial={{ opacity: 0 }}
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.8 }}>Coming Soon
+                                    transition={{ duration: 0.8, delay: .5 }}>
+                                    Coming Soon
                                 </m.h6>
                             </div>
                         </Link>
@@ -142,14 +143,14 @@ const ProjectsSection = () => {
                                     initial={{ opacity: 0 }}
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.8 }}>
+                                    transition={{ duration: 0.8, delay: .5 }}>
                                     Coming Soon
                                 </m.h5>
                                 <m.h6 className="text-xs xl:text-sm text-black"
                                     initial={{ opacity: 0 }}
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.8 }}>
+                                    transition={{ duration: 0.8, delay: .5 }}>
                                     Coming Soon
                                 </m.h6>
                             </div>

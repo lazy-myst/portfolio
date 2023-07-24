@@ -6,7 +6,7 @@ import Image from "next/image"
 const HeroSection = () => {
     return (
         <div className="flex-1">
-            <div className="h-screen text-white container justify-center m-auto md:flex-row flex-col flex items-center">
+            <div className="h-screen container justify-center m-auto md:flex-row flex-col flex items-center">
                 <AnimatePresence>
                     <motion.div
                         initial={{ opacity: 0 }}

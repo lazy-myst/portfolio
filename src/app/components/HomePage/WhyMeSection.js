@@ -14,8 +14,11 @@ const Section = () => {
                     initial={{ opacity: 0, y: 75 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '0px 0px -200px 0px' }}
-                    transition={{ duration: 0.5 }}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas at ligula libero. Integer pellentesque diam est, volutpat tempus lectus sagittis nec. Praesent et hendrerit risus.
+                    transition={{ duration: 0.5 }}
+                    className="whitespace-pre-line">
+                    Javascript Developer Based in Karachi, Pakistan,
+                    with desire of learning and building Web & Mobile applications
+                    through teamwork and communication.
                 </m.div>
             </h3>
             <Link href="/whyme" className="text-xs md:text-sm uppercase overflow-hidden my-4 flex items-center">
@@ -24,7 +27,8 @@ const Section = () => {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true, margin: '0px 0px -200px 0px' }}
                     transition={{ duration: 0.8, delay: .4 }}>
-                    <span className={`${isHover ? 'bg-white' : 'bg-transparent'} hover:bg-white rounded-full duration-300 border mr-3 h-3 w-3`}></span>
+                    <span className={`${isHover ? 'bg-white' : 'bg-transparent'} hover:bg-white rounded-full duration-300 border mr-3 h-3 w-3`}>
+                    </span>
                 </m.span>
                 <div className="flex overflow-hidden"
                     onMouseOver={() => setIsHover(true)}

@@ -6,7 +6,7 @@ import ContactsSection from "./components/HomePage/ContactsSection"
 
 const page = () => {
   return (
-    <main className="text-white flex items-center flex-col justify-center min-h-screen bg-black">
+    <main className="text-white flex items-center scroll-smooth flex-col justify-center min-h-screen bg-black">
       <HeroSection />
       <section className="container xl:px-12 px-4 flex my-20">
         <WhyMeSection />
