@@ -26,8 +26,22 @@ const ProjectsSection = () => {
                     </div>
                 </m.div>
                 <div className="absolute bottom-3 md:bottom-6 left-3 md:left-6 ">
-                    <h5 className="text-base uppercase">Coming Soon</h5>
-                    <h6 className="text-sm">Coming Soon</h6>
+                    <m.h5
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true, margin: '0px 0px -300px 0px' }}
+                        transition={{ duration: 0.5, delay: .5 }}
+                        className="text-base uppercase">
+                        Coming Soon
+                    </m.h5>
+                    <m.h6
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true, margin: '0px 0px -300px 0px' }}
+                        transition={{ duration: 0.5, delay: .5 }}
+                        className="text-sm">
+                        Coming Soon
+                    </m.h6>
                 </div>
             </Link>
             <Link
@@ -48,8 +62,21 @@ const ProjectsSection = () => {
                     </div>
                 </m.div>
                 <div className="absolute bottom-3 md:bottom-6 left-3 md:left-6 ">
-                    <h5 className="text-base uppercase">Coming Soon</h5>
-                    <h6 className="text-sm">Coming Soon</h6>
+                    <m.h5
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true, margin: '0px 0px -300px 0px' }}
+                        transition={{ duration: 0.5, delay: .5 }} className="text-base uppercase">
+                        Coming Soon
+                    </m.h5>
+                    <m.h6
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true, margin: '0px 0px -300px 0px' }}
+                        transition={{ duration: 0.5, delay: .5 }}
+                        className="text-sm">
+                        Coming Soon
+                    </m.h6>
                 </div>
             </Link>
             <Link
@@ -70,8 +97,22 @@ const ProjectsSection = () => {
                     </div>
                 </m.div>
                 <div className="absolute bottom-3 md:bottom-6 left-3 md:left-6 ">
-                    <h5 className="text-base uppercase">Coming Soon</h5>
-                    <h6 className="text-sm">Coming Soon</h6>
+                    <m.h5
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true, margin: '0px 0px -300px 0px' }}
+                        transition={{ duration: 0.5, delay: .5 }}
+                        className="text-base uppercase">
+                        Coming Soon
+                    </m.h5>
+                    <m.h6
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true, margin: '0px 0px -300px 0px' }}
+                        transition={{ duration: 0.5, delay: .5 }}
+                        className="text-sm">
+                        Coming Soon
+                    </m.h6>
                 </div>
             </Link>
             <Link
@@ -92,8 +133,22 @@ const ProjectsSection = () => {
                     </div>
                 </m.div>
                 <div className="absolute bottom-3 md:bottom-6 left-3 md:left-6 ">
-                    <h5 className="text-base uppercase">Coming Soon</h5>
-                    <h6 className="text-sm">Coming Soon</h6>
+                    <m.h5
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true, margin: '0px 0px -300px 0px' }}
+                        transition={{ duration: 0.5, delay: .5 }}
+                        className="text-base uppercase">
+                        Coming Soon
+                    </m.h5>
+                    <m.h6
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true, margin: '0px 0px -300px 0px' }}
+                        transition={{ duration: 0.5, delay: .5 }}
+                        className="text-sm">
+                        Coming Soon
+                    </m.h6>
                 </div>
             </Link>
             <Link
@@ -114,8 +169,22 @@ const ProjectsSection = () => {
                     </div>
                 </m.div>
                 <div className="absolute bottom-3 md:bottom-6 left-3 md:left-6 ">
-                    <h5 className="text-base uppercase">Coming Soon</h5>
-                    <h6 className="text-sm">Coming Soon</h6>
+                    <m.h5
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true, margin: '0px 0px -300px 0px' }}
+                        transition={{ duration: 0.5, delay: .5 }}
+                        className="text-base uppercase">
+                        Coming Soon
+                    </m.h5>
+                    <m.h6
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true, margin: '0px 0px -300px 0px' }}
+                        transition={{ duration: 0.5, delay: .5 }}
+                        className="text-sm">
+                        Coming Soon
+                    </m.h6>
                 </div>
             </Link>
         </div>
