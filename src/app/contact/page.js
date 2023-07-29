@@ -101,10 +101,10 @@ const page = () => {
                         transition={{ duration: .5, delay: .5 }}
                         className=" flex  items-center justify-center">
                         <Image
-                            src="/tlogoCon.png"
+                            src="/tNewlogoCon.png"
                             height={100}
                             width={100}
-                            className="p-4"
+                            className="p-6"
                         />
                         <div className="flex ml-3 text-xl items-center justify-center">
                             <Link
