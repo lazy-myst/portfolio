@@ -60,7 +60,7 @@ const ProjectsSection = () => {
                                 className="aspect-h-9 aspect-w-14">
                                 <div className="overflow-hidden">
                                     <Image
-                                        src="https://wallpapers.com/images/hd/anticipation-builds-with-coming-soon-message-mhp3vf2zctx9ydvr.jpg"
+                                        src="/31343D.svg"
                                         height={1280}
                                         width={720}
                                         className="w-full h-full object-cover hover:scale-105 transition duration-700"
@@ -95,7 +95,7 @@ const ProjectsSection = () => {
                             <div className="aspect-w-14 aspect-h-9">
                                 <div className="overflow-hidden">
                                     <Image
-                                        src="https://wallpapers.com/images/hd/anticipation-builds-with-coming-soon-message-mhp3vf2zctx9ydvr.jpg"
+                                        src="/31343D.svg"
                                         height={1280}
                                         width={720}
                                         className="w-full h-full object-cover hover:scale-105 transition duration-700"
@@ -131,7 +131,7 @@ const ProjectsSection = () => {
                             <div className="aspect-w-14 aspect-h-9">
                                 <div className="overflow-hidden">
                                     <Image
-                                        src="https://wallpapers.com/images/hd/anticipation-builds-with-coming-soon-message-mhp3vf2zctx9ydvr.jpg"
+                                        src="/31343D.svg"
                                         height={1280}
                                         width={720}
                                         className="w-full h-full object-cover hover:scale-105 transition duration-700" />

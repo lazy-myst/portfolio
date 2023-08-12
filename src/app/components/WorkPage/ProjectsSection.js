@@ -19,7 +19,7 @@ const ProjectsSection = () => {
                     className="aspect-w-14 aspect-h-9">
                     <div className="overflow-hidden">
                         <Image
-                            src="https://wallpapers.com/images/hd/anticipation-builds-with-coming-soon-message-mhp3vf2zctx9ydvr.jpg"
+                            src="/31343E.svg"
                             height={1280}
                             width={720}
                             className="object-cover w-full h-full hover:scale-105 transition duration-700" />
@@ -55,7 +55,7 @@ const ProjectsSection = () => {
                     transition={{ duration: 0.5, delay: .3 }}>
                     <div className="overflow-hidden">
                         <Image
-                            src="https://wallpapers.com/images/hd/anticipation-builds-with-coming-soon-message-mhp3vf2zctx9ydvr.jpg"
+                            src="/31343E.svg"
                             height={1280}
                             width={720}
                             className="object-cover w-full h-full hover:scale-105 transition duration-700" />
@@ -90,7 +90,7 @@ const ProjectsSection = () => {
                     transition={{ duration: 0.5, delay: .3 }}>
                     <div className="overflow-hidden">
                         <Image
-                            src="https://wallpapers.com/images/hd/anticipation-builds-with-coming-soon-message-mhp3vf2zctx9ydvr.jpg"
+                            src="/31343E.svg"
                             height={1280}
                             width={720}
                             className="object-cover w-full h-full hover:scale-105 transition duration-700" />
@@ -126,7 +126,7 @@ const ProjectsSection = () => {
                     className="aspect-w-14 aspect-h-9">
                     <div className="overflow-hidden">
                         <Image
-                            src="https://wallpapers.com/images/hd/anticipation-builds-with-coming-soon-message-mhp3vf2zctx9ydvr.jpg"
+                            src="/31343E.svg"
                             height={1280}
                             width={720}
                             className="object-cover w-full h-full hover:scale-105 transition duration-700" />
@@ -162,7 +162,7 @@ const ProjectsSection = () => {
                     className="aspect-w-14 aspect-h-9">
                     <div className="overflow-hidden">
                         <Image
-                            src="https://wallpapers.com/images/hd/anticipation-builds-with-coming-soon-message-mhp3vf2zctx9ydvr.jpg"
+                            src="/31343E.svg"
                             height={1280}
                             width={720}
                             className="object-cover w-full h-full hover:scale-105 transition duration-700" />

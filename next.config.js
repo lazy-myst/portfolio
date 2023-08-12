@@ -11,6 +11,10 @@ const nextConfig = {
                 protocol: "https",
                 hostname: "wallpapers.com",
             },
+            {
+                protocol: "https",
+                hostname: "placehold.co",
+            },
         ],
     },
 };

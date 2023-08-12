@@ -18,122 +18,122 @@ const Section1 = () => {
             </div>
             <div className=" xl:w-3/5 grid grid-cols-4 xl:grid-cols-6 gap-4 xl:gap-8 xl:ml-auto">
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
                 <Image
-                    src="/loadingicon.png"
+                    src="/31343C.svg"
                     width={100}
                     height={100}
                     className="object-contain w-full" />
