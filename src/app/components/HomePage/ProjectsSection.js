@@ -74,7 +74,7 @@ const ProjectsSection = () => {
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.8, delay: .5 }}>
-                                    Coming Soon
+                                    Hedge Play
                                 </m.h5>
                                 <m.h6 className="text-xs xl:text-sm text-black"
                                     initial={{ opacity: 0 }}
@@ -109,7 +109,7 @@ const ProjectsSection = () => {
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.8, delay: .5 }}>
-                                    Coming Soon
+                                    E-Store
                                 </m.h5>
                                 <m.h6
                                     className="text-xs xl:text-sm text-black"
@@ -144,14 +144,14 @@ const ProjectsSection = () => {
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.8, delay: .5 }}>
-                                    Coming Soon
+                                    Cyltrax
                                 </m.h5>
                                 <m.h6 className="text-xs xl:text-sm text-black"
                                     initial={{ opacity: 0 }}
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.8, delay: .5 }}>
-                                    Coming Soon
+                                    Software to keep track of Sales n Purchase and LPG System... etc.
                                 </m.h6>
                             </div>
                         </Link>

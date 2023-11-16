@@ -17,7 +17,7 @@ const Section = () => {
                     transition={{ duration: 0.5 }}
                     className="whitespace-pre-line">
                     Javascript Developer Based in Karachi, Pakistan,
-                    with desire of learning and building Web & Mobile applications
+                    with experience of &lt;1 year developing Web & Mobile applications
                     through teamwork and communication.
                 </m.div>
             </h3>
