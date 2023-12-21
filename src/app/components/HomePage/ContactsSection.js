@@ -44,7 +44,10 @@ const ContactsSection = () => {
                 </h6>
             </div>
             <div className="xl:w-1/2 space-y-4 text-sm flex flex-col md:text-base">
-                <Link href='#' className="flex items-center ">
+                <Link 
+                    target="_blank"
+                    href='https://www.instagram.com/aint_myst/' 
+                    className="flex items-center ">
                     <m.div
                         initial={{ display: 'flex', opacity: 0 }}
                         whileInView={{ opacity: 1 }}
@@ -68,7 +71,10 @@ const ContactsSection = () => {
                         </m.div>
                     </div>
                 </Link>
-                <Link href='#' className="flex items-center ">
+                <Link 
+                    target="_blank"
+                    href='https://www.facebook.com/aint.myst/' 
+                    className="flex items-center ">
                     <m.div
                         initial={{ display: 'flex', opacity: 0 }}
                         whileInView={{ opacity: 1 }}
@@ -92,7 +98,10 @@ const ContactsSection = () => {
                         </m.span>
                     </div>
                 </Link>
-                <Link href='#' className="flex items-center ">
+                <Link 
+                    target="_blank"
+                    href='https://www.linkedin.com/in/muhammad-ammad-8193b724a/' 
+                    className="flex items-center ">
                     <m.div
                         initial={{ display: 'flex', opacity: 0 }}
                         whileInView={{ opacity: 1 }}
