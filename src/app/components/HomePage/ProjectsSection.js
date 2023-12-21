@@ -58,30 +58,30 @@ const ProjectsSection = () => {
                             className="block duration-700 relative">
                             <m.div
                                 className="aspect-h-9 aspect-w-14">
-                                <div className="overflow-hidden">
+                                <div className="">
                                     <Image
-                                        src="/31343D.svg"
+                                        src="/HedgePlay.png"
                                         height={1280}
                                         width={720}
-                                        className="w-full h-full object-cover hover:scale-105 transition duration-700"
+                                        className="w-full h-full object-contain hover:scale-105 transition duration-700"
                                         style={{ objectPosition: '50% 50%' }} />
                                 </div>
                             </m.div>
-                            <div className="absolute bottom-3 xl:bottom-6 left-3 xl:left-6">
+                            <div className="absolute bottom-10 xl:bottom-20 left-3 xl:left-6">
                                 <m.h5
-                                    className="text-xs xl:text-base text-black uppercase"
+                                    className="text-xs xl:text-base text-white uppercase"
                                     initial={{ opacity: 0 }}
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.8, delay: .5 }}>
                                     Hedge Play
                                 </m.h5>
-                                <m.h6 className="text-xs xl:text-sm text-black"
+                                <m.h6 className="text-xs xl:text-sm text-white"
                                     initial={{ opacity: 0 }}
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.8, delay: .5 }}>
-                                    Coming Soon
+                                    Invest in a new way in a new World.
                                 </m.h6>
                             </div>
                         </Link>
