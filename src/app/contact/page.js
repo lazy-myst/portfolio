@@ -50,7 +50,7 @@ const page = () => {
                             </Link>
                         </div>
                     </m.div>
-                </div>v>
+                </div>
                 </div>
             </div>
         </main>
