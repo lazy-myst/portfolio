@@ -83,9 +83,25 @@ export const getProject = (slug) => projects.find((p) => p.slug === slug)
 export const site = {
     name: "Ammad",
     role: "Developer & Creative Coder",
+    tagline: "Interfaces, motion & WebGL",
     email: "ammad9978@gmail.com",
     socials: [
         { label: "GitHub", href: "https://github.com/lazy-myst" },
         { label: "LinkedIn", href: "https://www.linkedin.com/in/muhammad-ammad-8193b724a/" },
     ],
 }
+
+// The horizontal sequence shown on the WebGL stage: home first, then every project.
+// Add `video: "/projects/<slug>/clip.mp4"` to a project to play a video instead of the still.
+export const slides = [
+    { key: "home", href: "/", number: "00", title: site.name, image: "/projects/home.jpg" },
+    ...projects.map((p) => ({
+        key: p.slug,
+        href: `/work/${p.slug}`,
+        number: p.number,
+        title: p.title,
+        image: p.cover,
+        video: p.video,
+        project: p,
+    })),
+]

@@ -25,11 +25,13 @@ export default function SmoothScroll() {
         }
     }, [])
 
-    // Every route starts at the top; the Focus page never scrolls.
+    // Every route starts at the top; slide pages (home + /work/<slug>) never scroll.
     useEffect(() => {
         if (!lenis) return
-        lenis.scrollTo(0, { immediate: true, force: true })
-        if (pathname === "/") lenis.stop()
+        // The index positions itself (it scrolls to the slot it folds into).
+        if (pathname !== "/work") lenis.scrollTo(0, { immediate: true, force: true })
+        const isSlide = pathname === "/" || pathname.startsWith("/work/")
+        if (isSlide) lenis.stop()
         else lenis.start()
     }, [pathname])
 

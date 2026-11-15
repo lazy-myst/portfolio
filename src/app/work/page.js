@@ -1,7 +1,7 @@
-import WorksList from "../components/work/WorksList"
+import IndexList from "../components/slides/IndexList"
 
-export const metadata = { title: "All Work — Ammad" }
+export const metadata = { title: "Index — Ammad" }
 
 export default function WorkPage() {
-    return <WorksList />
+    return <IndexList />
 }

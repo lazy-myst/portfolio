@@ -6,78 +6,38 @@ void main() {
 }
 `
 
+// Slide transition: the outgoing image is dragged sideways and stretched in a
+// diagonal sweep (pixels on the leading edge start first and accelerate), the
+// incoming image is pulled in behind it, UVs mirror at the borders so the
+// stretch smears into reflections, and a travelling sine wave bends both.
 export const fragmentShader = /* glsl */ `
 precision highp float;
 
-uniform sampler2D uTex1;      // current image
-uniform sampler2D uTex2;      // next image
-uniform vec2 uRes1;           // image sizes for cover-fit
+uniform sampler2D uTex1;
+uniform sampler2D uTex2;
+uniform vec2 uRes1;
 uniform vec2 uRes2;
-uniform vec2 uResolution;     // viewport size
-uniform vec2 uMouse;          // 0..1, smoothed
-uniform vec3 uBg;
+uniform vec2 uResolution;
+uniform vec2 uMouse;
 uniform float uTime;
-uniform float uProgress;      // 0 -> 1 transition
-uniform float uDir;           // 1 next, -1 previous
-uniform float uHover;         // cursor lens
-uniform float uVelocity;      // drag / wheel energy
-uniform float uZoom;          // 1 = normal, < 1 = zoomed in
-uniform float uBlackout;      // 0..1 darken
-uniform float uOpacity;       // 0..1 fade to background
+uniform float uProgress;   // 0 -> 1
+uniform float uDir;        // 1 next, -1 previous
+uniform float uMask;       // 0 closed (black) -> 1 fully open letterbox
+uniform float uDim;        // overall brightness
 
 varying vec2 vUv;
 
-// --- Simplex 3D noise (Ashima Arts / Stefan Gustavson, MIT) ---
-vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-vec4 permute(vec4 x) { return mod289(((x * 34.0) + 1.0) * x); }
-vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
-float snoise(vec3 v) {
-    const vec2 C = vec2(1.0 / 6.0, 1.0 / 3.0);
-    const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
-    vec3 i = floor(v + dot(v, C.yyy));
-    vec3 x0 = v - i + dot(i, C.xxx);
-    vec3 g = step(x0.yzx, x0.xyz);
-    vec3 l = 1.0 - g;
-    vec3 i1 = min(g.xyz, l.zxy);
-    vec3 i2 = max(g.xyz, l.zxy);
-    vec3 x1 = x0 - i1 + C.xxx;
-    vec3 x2 = x0 - i2 + C.yyy;
-    vec3 x3 = x0 - D.yyy;
-    i = mod289(i);
-    vec4 p = permute(permute(permute(
-        i.z + vec4(0.0, i1.z, i2.z, 1.0))
-        + i.y + vec4(0.0, i1.y, i2.y, 1.0))
-        + i.x + vec4(0.0, i1.x, i2.x, 1.0));
-    float n_ = 0.142857142857;
-    vec3 ns = n_ * D.wyz - D.xzx;
-    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
-    vec4 x_ = floor(j * ns.z);
-    vec4 y_ = floor(j - 7.0 * x_);
-    vec4 x = x_ * ns.x + ns.yyyy;
-    vec4 y = y_ * ns.x + ns.yyyy;
-    vec4 h = 1.0 - abs(x) - abs(y);
-    vec4 b0 = vec4(x.xy, y.xy);
-    vec4 b1 = vec4(x.zw, y.zw);
-    vec4 s0 = floor(b0) * 2.0 + 1.0;
-    vec4 s1 = floor(b1) * 2.0 + 1.0;
-    vec4 sh = -step(h, vec4(0.0));
-    vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
-    vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
-    vec3 p0 = vec3(a0.xy, h.x);
-    vec3 p1 = vec3(a0.zw, h.y);
-    vec3 p2 = vec3(a1.xy, h.z);
-    vec3 p3 = vec3(a1.zw, h.w);
-    vec4 norm = taylorInvSqrt(vec4(dot(p0, p0), dot(p1, p1), dot(p2, p2), dot(p3, p3)));
-    p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
-    vec4 m = max(0.6 - vec4(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), 0.0);
-    m = m * m;
-    return 42.0 * dot(m * m, vec4(dot(p0, x0), dot(p1, x1), dot(p2, x2), dot(p3, x3)));
+#define TAU 6.28318530718
+
+// Reflect UVs outside 0..1 back into range (stretch smears into mirrored copies).
+vec2 mirrorUv(vec2 v) {
+    vec2 m = mod(v, 2.0);
+    return mix(m, 2.0 - m, step(1.0, m));
 }
 
-float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+// 0 -> 1 -> 0 triangle.
+float peak(float v) { return 1.0 - abs(v * 2.0 - 1.0); }
 
-// Fit an image like CSS background-size: cover.
 vec2 coverUv(vec2 uv, vec2 imgRes) {
     float screenRatio = uResolution.x / uResolution.y;
     float imageRatio = imgRes.x / imgRes.y;
@@ -87,83 +47,155 @@ vec2 coverUv(vec2 uv, vec2 imgRes) {
     return (uv - 0.5) * scale + 0.5;
 }
 
-vec2 scaleUv(vec2 uv, float s) { return (uv - 0.5) * s + 0.5; }
+float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+
+vec3 sampleSlide(sampler2D tex, vec2 res, vec2 uv, float blur) {
+    vec2 base = coverUv(uv, res);
+    // Horizontal smear: a few taps along x, wider while the pixel is moving fast.
+    vec3 c = texture2D(tex, mirrorUv(base)).rgb * 0.4;
+    c += texture2D(tex, mirrorUv(base + vec2(blur, 0.0))).rgb * 0.2;
+    c += texture2D(tex, mirrorUv(base - vec2(blur, 0.0))).rgb * 0.2;
+    c += texture2D(tex, mirrorUv(base + vec2(blur * 2.0, 0.0))).rgb * 0.1;
+    c += texture2D(tex, mirrorUv(base - vec2(blur * 2.0, 0.0))).rgb * 0.1;
+    return c;
+}
 
 void main() {
     vec2 uv = vUv;
-    float aspect = uResolution.x / uResolution.y;
     float p = uProgress;
-    float wave = sin(p * 3.14159265);          // 0 -> 1 -> 0 across the transition
 
-    // Cursor lens: gently magnify the area around the pointer.
-    vec2 toMouse = (uv - uMouse) * vec2(aspect, 1.0);
-    float lens = smoothstep(0.45, 0.0, length(toMouse)) * uHover;
-    uv -= (uv - uMouse) * lens * 0.06;
+    // Subtle parallax + breathing so a resting slide still feels alive.
+    vec2 rest = (uv - 0.5) * (0.965 + sin(uTime * 0.25) * 0.005) + 0.5;
+    rest += (uMouse - 0.5) * vec2(-0.012, -0.008);
 
-    // Idle liquid drift + drag ripples.
-    float idle = snoise(vec3(uv * 1.6, uTime * 0.12));
-    uv += vec2(idle) * 0.004;
-    uv.x += sin(uv.y * 9.0 + uTime * 2.0) * 0.012 * uVelocity;
+    // Leading edge: the side the new image arrives from.
+    float lead = uDir > 0.0 ? uv.x : 1.0 - uv.x;
 
-    // Noise field that shapes the wipe edge.
-    float edgeNoise = snoise(vec3(uv * vec2(2.2, 3.0), uTime * 0.25)) * 0.5 + 0.5;
-    float axis = uDir > 0.0 ? uv.y : 1.0 - uv.y;
-    float field = axis * 0.72 + edgeNoise * 0.28;
-    float front = mix(-0.2, 1.2, p);
-    float mask = 1.0 - smoothstep(front - 0.1, front + 0.1, field);   // 1 where next image shows
-    float edge = mask * (1.0 - mask) * 4.0;                              // peaks on the wipe edge
+    // Diagonal sweep with a wobbling front.
+    float spreadX = 1.1;
+    float spreadY = 0.55 + sin(uTime * 1.7 + uv.x * TAU) * 0.12;
+    float d = p * (1.0 + spreadX + spreadY) - (1.0 - lead) * spreadX - uv.y * spreadY;
+    d = clamp(d, 0.0, 1.0);
 
-    // Turbulence that tears the image while it changes.
-    vec2 turb = vec2(
-        snoise(vec3(uv * 3.5, uTime * 0.6)),
-        snoise(vec3(uv * 3.5 + 7.3, uTime * 0.6))
-    ) * 0.05 * wave;
+    // Travel: global progress plus the accelerated local sweep.
+    float accel = 1.6;
+    float travel = p + d * accel;
+    float shift1 = travel * 0.55;
+    float shift2 = (travel - 1.0 - accel) * 0.55;
 
-    float hoverScale = 1.0 - uHover * 0.035;
+    // Wave that only exists mid-transition.
+    vec2 wave = sin(uTime * vec2(2.1, 1.3) + uv.yx * vec2(9.0, 5.5)) * vec2(0.035, 0.02);
+    vec2 bend = (peak(p) * 0.45 + peak(d) * 0.55) * wave;
 
-    // Current image: pushed away and zoomed while leaving.
-    vec2 uv1 = scaleUv(uv, hoverScale * uZoom * (1.0 - p * 0.12));
-    uv1.y -= uDir * p * 0.12;
-    uv1 += turb + edge * 0.04 * vec2(0.0, -uDir);
-    uv1 = coverUv(uv1, uRes1);
+    float blur = peak(d) * 0.018 + peak(p) * 0.006;
 
-    // Next image: arrives zoomed and settles.
-    vec2 uv2 = scaleUv(uv, hoverScale * uZoom * (1.0 - (1.0 - p) * 0.18));
-    uv2.y += uDir * (1.0 - p) * 0.12;
-    uv2 += turb * (1.0 - p) + edge * 0.06 * vec2(0.0, uDir);
-    uv2 = coverUv(uv2, uRes2);
+    vec3 c1 = sampleSlide(uTex1, uRes1, rest + vec2(uDir * shift1, 0.0) + bend, blur);
+    vec3 c2 = sampleSlide(uTex2, uRes2, rest + vec2(uDir * shift2, 0.0) + bend, blur);
 
-    vec4 c1 = texture2D(uTex1, uv1);
+    // Mostly a soft cross-fade along the sweep, with a hint of a hard seam.
+    float seam = step(1.0 - lead, d);
+    vec3 color = mix(c1, c2, mix(d, seam, 0.25));
 
-    // Chromatic split on the next image along the edge.
-    float split = edge * 0.012 + wave * 0.004;
-    vec4 c2;
-    c2.r = texture2D(uTex2, uv2 + vec2(split, 0.0)).r;
-    c2.g = texture2D(uTex2, uv2).g;
-    c2.b = texture2D(uTex2, uv2 - vec2(split, 0.0)).b;
-    c2.a = 1.0;
+    // Flash of light riding the sweep.
+    color += peak(d) * 0.08;
 
-    vec3 color = mix(c1.rgb, c2.rgb, mask);
-
-    // Bright seam on the wipe edge.
-    color += edge * 0.10 * wave;
-
-    // Dim the whole frame a touch mid-transition.
-    color *= 1.0 - wave * 0.18;
-
-    // Vignette.
-    float vig = smoothstep(1.15, 0.25, length((vUv - 0.5) * vec2(aspect, 1.0) * 0.95));
-    color *= mix(0.45, 1.0, vig);
-
-    // Darken the lower part of the frame so overlaid titles stay readable on bright images.
-    color *= mix(0.5, 1.0, smoothstep(0.0, 0.55, vUv.y));
-
-    // Blackout for list / detail modes.
-    color *= 1.0 - uBlackout * 0.92;
+    // Vignette + dim so overlaid text reads.
+    float aspect = uResolution.x / uResolution.y;
+    float vig = smoothstep(1.2, 0.3, length((vUv - 0.5) * vec2(aspect, 1.0) * 0.9));
+    color *= mix(0.55, 1.0, vig) * uDim;
+    // Shade the left side, where project text sits, so it reads on bright images.
+    color *= mix(0.72, 1.0, smoothstep(0.05, 0.6, vUv.x));
 
     // Film grain.
-    color += (hash(vUv * uResolution + fract(uTime) * 100.0) - 0.5) * 0.045;
+    color += (hash(vUv * uResolution + fract(uTime) * 91.0) - 0.5) * 0.04;
 
-    gl_FragColor = vec4(mix(uBg, color, uOpacity), 1.0);
+    // Letterbox: only a horizontal band of height uMask is visible.
+    float band = step(abs(vUv.y * 2.0 - 1.0), uMask);
+    color *= band;
+
+    gl_FragColor = vec4(color, 1.0);
+}
+`
+
+// ---------------------------------------------------------------------------
+// Index thumbnails: one subdivided plane per project, drawn with a perspective
+// camera in pixel units. Each corner blends independently between the grid
+// slot and the full screen, so a thumbnail "unfolds" into the slide (and folds
+// back), while a depth wave rolls through it.
+// ---------------------------------------------------------------------------
+export const itemVertexShader = /* glsl */ `
+uniform vec4 uRect;      // slot centre (x, y) and size (w, h), world px
+uniform vec2 uScreen;    // viewport size, px
+uniform vec4 uCorners;   // per-corner progress: top-left, top-right, bottom-left, bottom-right
+uniform float uSway;     // depth wave strength
+uniform vec3 uHover;     // pointer uv inside the plane (xy) + strength (z)
+uniform float uTime;
+
+varying vec2 vUv;
+varying float vBlend;
+
+void main() {
+    vUv = uv;
+
+    float top = mix(uCorners.x, uCorners.y, uv.x);
+    float bottom = mix(uCorners.z, uCorners.w, uv.x);
+    float blend = mix(bottom, top, uv.y);
+
+    vec3 slot = vec3(uRect.xy + position.xy * uRect.zw, 0.0);
+    vec3 full = vec3(position.xy * uScreen, 0.0);
+    vec3 pos = mix(slot, full, blend);
+
+    // Rolling depth wave, measured from the screen centre.
+    float dist = length(pos.xy);
+    float wave = sin(uTime * 1.1 + dist * 0.0045) * 170.0
+               + sin(uTime * 2.2 + dist * 0.028) * 70.0;
+    pos.z += wave * uSway;
+
+    // Pointer ripple while hovering a thumbnail.
+    float r = length((uv - uHover.xy) * uRect.zw);
+    float ripple = sin(uTime * 3.2 - r * 0.055) * 22.0 * max(0.0, 1.0 - r / 300.0);
+    pos.z += ripple * uHover.z * (1.0 - blend);
+
+    vBlend = blend;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+}
+`
+
+export const itemFragmentShader = /* glsl */ `
+precision highp float;
+
+uniform sampler2D uTex;
+uniform vec2 uTexRes;
+uniform vec4 uRect;
+uniform vec2 uScreen;
+uniform vec2 uHoverShift;
+uniform float uBright;
+uniform float uOpacity;
+
+varying vec2 vUv;
+varying float vBlend;
+
+void main() {
+    // Cover-fit against the plane's current size (thumbnail -> screen).
+    vec2 size = mix(uRect.zw, uScreen, vBlend);
+    float planeRatio = size.x / size.y;
+    float imageRatio = uTexRes.x / uTexRes.y;
+    vec2 scale = planeRatio > imageRatio
+        ? vec2(1.0, imageRatio / planeRatio)
+        : vec2(planeRatio / imageRatio, 1.0);
+
+    // Thumbnails are slightly zoomed so the image can pan under the pointer;
+    // at full screen it matches the slide's resting zoom.
+    float zoom = mix(0.88, 0.965, vBlend);
+    vec2 uv = (vUv - 0.5) * scale * zoom + 0.5 + uHoverShift * (1.0 - vBlend);
+    vec3 color = texture2D(uTex, uv).rgb;
+
+    // Thumbnail grade -> slide grade (vignette, dim, left shade) as it fills the screen.
+    float aspect = uScreen.x / uScreen.y;
+    float vig = smoothstep(1.2, 0.3, length((vUv - 0.5) * vec2(aspect, 1.0) * 0.9));
+    float slideGrade = mix(0.55, 1.0, vig) * 0.72 * mix(0.72, 1.0, smoothstep(0.05, 0.6, vUv.x));
+    color *= mix(uBright, slideGrade, vBlend);
+
+    gl_FragColor = vec4(color, uOpacity);
 }
 `

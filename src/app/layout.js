@@ -1,5 +1,5 @@
 import './globals.css'
-import { Cormorant_Garamond, Inter } from 'next/font/google'
+import { EB_Garamond, Inter } from 'next/font/google'
 import GLStage from './components/gl/GLStage'
 import SiteHeader from './components/ui/SiteHeader'
 import Cursor from './components/ui/Cursor'
@@ -7,9 +7,9 @@ import Loader from './components/ui/Loader'
 import PageCover from './components/ui/PageCover'
 import SmoothScroll from './components/ui/SmoothScroll'
 
-const serif = Cormorant_Garamond({
+const serif = EB_Garamond({
   subsets: ['latin'],
-  weight: ['300', '400', '500'],
+  weight: ['400', '500'],
   style: ['normal', 'italic'],
   variable: '--font-serif',
   display: 'swap',

@@ -55,7 +55,7 @@ export default function AboutView() {
     useReveal(rootRef)
 
     useEffect(() => {
-        setGL({ mode: "hidden", hover: 0 })
+        setGL({ open: false })
     }, [])
 
     useGLReady(() => {

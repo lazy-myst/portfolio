@@ -1,5 +1,5 @@
-import FocusView from "./components/focus/FocusView"
+import SlideView from "./components/slides/SlideView"
 
 export default function Page() {
-    return <FocusView />
+    return <SlideView index={0} />
 }

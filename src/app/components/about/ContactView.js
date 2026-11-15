@@ -10,8 +10,8 @@ export default function ContactView() {
     const rootRef = useRef(null)
 
     useEffect(() => {
-        // Keep the current project image, heavily dimmed, behind the contact page.
-        setGL({ mode: "list", hover: 0 })
+        // The stage stays closed (black) behind text pages.
+        setGL({ open: false })
     }, [])
 
     useGLReady(() => {

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
 import { projects, getProject } from "../../data/projects"
-import ProjectDetail from "../../components/work/ProjectDetail"
+import SlideView from "../../components/slides/SlideView"
 
 export function generateStaticParams() {
     return projects.map((p) => ({ slug: p.slug }))
@@ -12,6 +12,7 @@ export function generateMetadata({ params }) {
 }
 
 export default function ProjectPage({ params }) {
-    if (!getProject(params.slug)) notFound()
-    return <ProjectDetail slug={params.slug} />
+    const project = getProject(params.slug)
+    if (!project) notFound()
+    return <SlideView index={project.index + 1} />
 }

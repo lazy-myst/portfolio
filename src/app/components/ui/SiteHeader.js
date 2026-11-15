@@ -1,40 +1,78 @@
 'use client'
 
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import TransitionLink from "./TransitionLink"
 import { site } from "../../data/projects"
+import { glState, setGL } from "../../lib/glStore"
+import { navigate } from "../../lib/transition"
+import { INDEX_CLOSE_EVENT } from "../slides/IndexList"
+import { SLIDE_LEAVE_EVENT } from "../slides/SlideView"
 
-const NAV = [
-    { href: "/", label: "Focus" },
-    { href: "/work", label: "All" },
-    { href: "/whyme", label: "About" },
-    { href: "/contact", label: "Contact" },
-]
+function ArrowRight() {
+    return (
+        <svg className="header__arrow" viewBox="0 0 45 7" aria-hidden="true">
+            <polyline points="0,7 45,7 24,0 24,6 0,6" />
+        </svg>
+    )
+}
 
 export default function SiteHeader() {
     const pathname = usePathname()
-    const isActive = (href) => (href === "/" ? pathname === "/" : pathname.startsWith(href))
+    const router = useRouter()
+    const listOpen = pathname === "/work"
+
+    // Hamburger: a project slide folds straight into its thumbnail on the index;
+    // the home slide closes its letterbox first. X: unfold back into the slide.
+    const toggleList = (e) => {
+        e.preventDefault()
+        if (listOpen) {
+            window.dispatchEvent(new Event(INDEX_CLOSE_EVENT))
+            return
+        }
+        window.dispatchEvent(new Event(SLIDE_LEAVE_EVENT))
+        if (glState.index > 0) {
+            navigate(router, "/work", { useCover: false })
+            return
+        }
+        setGL({ open: false })
+        navigate(router, "/work", {
+            useCover: false,
+            beforePush: () => new Promise((r) => setTimeout(r, 750)),
+        })
+    }
 
     return (
-        <header className="site-header">
-            <TransitionLink href="/" label="Focus" className="font-serif text-2xl tracking-tight leading-none">
-                {site.name}<span className="text-neutral-500">.</span>
-            </TransitionLink>
-            <nav>
-                <ul className="flex gap-5 md:gap-8 text-[11px] uppercase tracking-[0.2em]">
-                    {NAV.map((item) => (
-                        <li key={item.href}>
-                            <TransitionLink
-                                href={item.href}
-                                label={item.label}
-                                className={`nav-link ${isActive(item.href) ? "is-active" : ""}`}
-                            >
-                                {item.label}
-                            </TransitionLink>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
+        <header className="header">
+            <div className="header__left">
+                <TransitionLink href="/" label={site.name} className="header__home underline-anim">
+                    {site.name.toUpperCase()}
+                </TransitionLink>
+                <TransitionLink href="/whyme" label="About" className={`header__about ${pathname === "/whyme" ? "is-active" : ""}`}>
+                    <span>About</span>
+                    <ArrowRight />
+                </TransitionLink>
+                <TransitionLink href="/contact" label="Contact" className={`header__about ${pathname === "/contact" ? "is-active" : ""}`}>
+                    <span>Contact</span>
+                    <ArrowRight />
+                </TransitionLink>
+            </div>
+
+            <ul className="header__sns">
+                {site.socials.map((s) => (
+                    <li key={s.href}>
+                        <a href={s.href} target="_blank" rel="noreferrer" className="underline-anim">{s.label.toLowerCase()}</a>
+                    </li>
+                ))}
+            </ul>
+
+            <a
+                href={listOpen ? "/" : "/work"}
+                onClick={toggleList}
+                className={`menuTrigger ${listOpen ? "is-close" : ""}`}
+                aria-label={listOpen ? "Close index" : "Open index"}
+            >
+                <span /><span /><span />
+            </a>
         </header>
     )
 }
