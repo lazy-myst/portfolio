@@ -24,6 +24,13 @@ const Section1 = () => {
                         height={100}
                         className="object-contain w-full" />
                 </abbr>
+                <abbr className="flex items-center justify-center" title="Apex Web Studios">
+                    <Image
+                        src="/apex-logo.png"
+                        width={100}
+                        height={100}
+                        className="object-contain w-full" />
+                </abbr>
             </div>
         </div>
     )

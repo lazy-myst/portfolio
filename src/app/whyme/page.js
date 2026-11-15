@@ -1,19 +1,7 @@
-import HeroSection from "../components/WhyMePage/HeroSection"
-import AboutMeSection from "../components/WhyMePage/AboutMeSection"
-import DevelopmentSection from "../components/WhyMePage/DevelopmentSection"
+import AboutView from "../components/about/AboutView"
 
-const page = () => {
-    return (
-        <main className="text-black flex items-center flex-col justify-center min-h-screen bg-white">
-            <HeroSection />
-            <section className="container pb-20">
-                <AboutMeSection />
-            </section>
-            <section className="container py-20">
-                <DevelopmentSection />
-            </section>
-        </main>
-    )
+export const metadata = { title: "About — Ammad" }
+
+export default function AboutPage() {
+    return <AboutView />
 }
-
-export default page
