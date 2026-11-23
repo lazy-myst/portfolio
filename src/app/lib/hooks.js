@@ -1,12 +1,14 @@
 'use client'
 
-import { useEffect, useRef } from "react"
+import { useEffect, useLayoutEffect, useRef } from "react"
 import { glState, subscribeGL } from "./glStore"
 
 // Run `cb` once, as soon as the loader has finished (immediately on later visits).
 export function useGLReady(cb) {
     const cbRef = useRef(cb)
-    cbRef.current = cb
+    useLayoutEffect(() => {
+        cbRef.current = cb
+    })
     useEffect(() => {
         let fired = false
         const fire = () => {

@@ -6,13 +6,15 @@ export function generateStaticParams() {
     return projects.map((p) => ({ slug: p.slug }))
 }
 
-export function generateMetadata({ params }) {
-    const project = getProject(params.slug)
+export async function generateMetadata({ params }) {
+    const { slug } = await params
+    const project = getProject(slug)
     return { title: project ? `${project.title} — Ammad` : "Project — Ammad" }
 }
 
-export default function ProjectPage({ params }) {
-    const project = getProject(params.slug)
+export default async function ProjectPage({ params }) {
+    const { slug } = await params
+    const project = getProject(slug)
     if (!project) notFound()
     return <SlideView index={project.index + 1} />
 }
